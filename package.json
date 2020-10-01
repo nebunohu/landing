@@ -1,11 +1,12 @@
 {
-  "name": "landing",
+  "name": "landing_page",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --mode development",
+    "build": "webpack --mode production",
     "start": "webpack-dev-server"
   },
   "repository": {
