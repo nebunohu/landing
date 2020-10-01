@@ -1,3 +1,10 @@
+//pug-loader
+//var template = require("pug-loader!./src/index.pug");
+/*var template = require("./src/index.pug");
+var locals = { };
+var html = template(locals);*/
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
     entry: __dirname + "/src/index.js",
     output: {
@@ -7,7 +14,10 @@ module.exports = {
         rules: [
             {
                 test: /\.pug$/,
-                use: 'pug-loader'
+                loader: 'pug-loader',
+                options: {
+                    pretty: true
+                }
             },
             {
                 test: /\.m?js$/,
@@ -20,5 +30,11 @@ module.exports = {
                 }
             }
         ]
+    },
+    plugins: [new HtmlWebpackPlugin( {
+        template: "./src/index.pug"
+    })],
+    devServer: {
+        stats: 'errors-only'
     }
 };
