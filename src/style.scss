@@ -1,5 +1,15 @@
+@import "components/logo/logo.scss";
+
+
 $body-color: yellow;
+$default_font: Arial;
+
+* {
+    margin: 0;
+    padding: 0;
+}
 
 body {
+    font-family: $default_font;
     color: $body-color;
 }
