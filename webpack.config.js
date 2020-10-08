@@ -1,9 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    entry: __dirname + "/src/index.js",
+    entry: path.resolve(__dirname, "./src/index.js"),
     output: {
-        path: __dirname + "/dist/",
+        path: path.resolve(__dirname, "dist"),
+        filename: 'index.js'
     },
     module: {
         rules: [
@@ -36,12 +41,37 @@ module.exports = {
                         }
                     },
                 ]   
+            },
+            {
+                test: /.s?css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             }
         ]
     },
-    plugins: [new HtmlWebpackPlugin( {
-        template: "./src/index.pug"
-    })],
+    optimization: {
+        minimize: true,
+        minimizer: [
+          // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+          // `...`
+            new CssMinimizerPlugin(),
+        ],
+    },
+    plugins: [
+        new HtmlWebpackPlugin( {
+            template: path.resolve(__dirname, "./src/index.pug")
+        }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery' 
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+        })
+    ],
     devServer: {
         stats: 'errors-only'
     }
