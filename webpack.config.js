@@ -32,7 +32,7 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [ 
-                    'style-loader',
+                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
                     'css-loader', 
                     {
                         loader: 'sass-loader',
@@ -42,21 +42,11 @@ module.exports = {
                     },
                 ]   
             },
-            {
-                test: /.s?css$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-            },
-            {
-                test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
-            }
         ]
     },
     optimization: {
         minimize: true,
         minimizer: [
-          // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-          // `...`
             new CssMinimizerPlugin(),
         ],
     },
@@ -66,7 +56,8 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
-            jQuery: 'jquery' 
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
         }),
         new MiniCssExtractPlugin({
             filename: 'style.css',
