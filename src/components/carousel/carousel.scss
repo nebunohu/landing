@@ -11,5 +11,11 @@ Position must be relative!
   overflow: hidden;
 }
 
+.carousel-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
 
 
