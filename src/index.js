@@ -11,7 +11,7 @@ $(function() {
       //list: $('.carousel_list'),
       //items: '.carousel_item',
       animation: 'slow',
-      wrap: 'both',
+      //wrap: 'both',
       vertical: false,
       rtl: true,
   });

@@ -4,8 +4,9 @@ have a fixed width and height (but it's not required).
 */
 .carousel_item {
   /* Required only for block elements like <li>'s */
+  margin: 0;
   float: left;
-  width: 300px;
+  width: 100%;
   height: 100%;
   border: 2px solid blue;
 }
