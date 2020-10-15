@@ -1,0 +1,15 @@
+/*
+These are the item elements. jCarousel works best, if the items
+have a fixed width and height (but it's not required).
+*/
+.carousel_item {
+  /* Required only for block elements like <li>'s */
+  float: left;
+  width: 300px;
+  height: 100%;
+  border: 2px solid blue;
+}
+
+.carousel[dir=rtl] .carousel_item {
+  float: left;
+}

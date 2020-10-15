@@ -4,6 +4,7 @@ const path = require('path');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+
 module.exports = {
     entry: path.resolve(__dirname, "./src/index.js"),
     output: {
@@ -58,6 +59,7 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             'window.jQuery': 'jquery',
+            //'$.jcarousel': 'jcarousel'
         }),
         new MiniCssExtractPlugin({
             filename: 'style.css',
