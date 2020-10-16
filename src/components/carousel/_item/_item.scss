@@ -6,11 +6,34 @@ have a fixed width and height (but it's not required).
   /* Required only for block elements like <li>'s */
   margin: 0;
   float: left;
-  width: 100%;
+  width: 490px;
   height: 100%;
-  border: 2px solid blue;
+  //border: 2px solid blue;
+}
+
+.carousel_item:nth-child(2n) {
+  /* Required only for block elements like <li>'s */
+  background-color: red;
+  //border: 2px solid blue;
+}
+
+.carousel_item:nth-child(2n+1) {
+  /* Required only for block elements like <li>'s */
+  background-color: blue;
+  //border: 2px solid blue;
+}
+
+.carousel_item p{
+  /* Required only for block elements like <li>'s */
+  width: 450px;
+  height: 100%;
+  //border: 2px solid blue;
 }
 
 .carousel[dir=rtl] .carousel_item {
-  float: left;
+  float: right;
+}
+
+.carousel-wrapper li {
+  list-style: none;
 }

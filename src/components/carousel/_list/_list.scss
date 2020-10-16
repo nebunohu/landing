@@ -4,9 +4,11 @@ You must ensure that the position is relative or absolute and
 that the width is big enough to contain all items.
 */
 .carousel_list {
-  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 500px;
   height: 100px;
-  border: 2px solid red;
+  //border: 2px solid red;
   position: relative;
 
   /* Optional, required in this case since it's a <ul> element */

@@ -10,10 +10,10 @@ $(function() {
       // Configuration goes here
       //list: $('.carousel_list'),
       //items: '.carousel_item',
-      animation: 'slow',
-      //wrap: 'both',
-      vertical: false,
-      rtl: true,
+      //animation: 'slow',
+      wrap: 'both',
+      //vertical: false,
+      //rtl: true,
   });
 
   $('.carousel-prev').jcarouselControl({
