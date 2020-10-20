@@ -6,23 +6,42 @@ import 'bootstrap/js/src/carousel';
 import 'jcarousel';
 
 $(function() {
-  $('.carousel').jcarousel({
-      // Configuration goes here
-      //list: $('.carousel_list'),
-      //items: '.carousel_item',
-      //animation: 'slow',
-      wrap: 'both',
-      //vertical: false,
-      //rtl: true,
-  });
+  $('.carousel_wrapper')
+      .jcarousel({
+          // Configuration goes here
+          //list: '.carousel_list',
+          //items: '.carousel_item',
+          animation: 'slow',
+          wrap: 'both',
+          vertical: false,
+      })
+      .jcarouselAutoscroll({
+          interval: 6000,
+          target: '+=1',
+          autostart: true
+      })
+  ;
 
-  $('.carousel-prev').jcarouselControl({
+  $('.carousel_prev').jcarouselControl({
     target: '-=1',
-    carousel: $('.carousel')
+    carousel: $('.carousel_wrapper')
   });
 
-  $('.carousel-next').jcarouselControl({
+  $('.carousel_next').jcarouselControl({
     target: '+=1',
-    carousel: $('.carousel')
+    carousel: $('.carousel_wrapper')
   });
+
+  $('.carousel_pagination').jcarouselPagination({
+    item: function(page) {
+        return '<a class="carousel_page-marker" href="#' + page + '">' + '</a>';
+    },
+    carousel: $('.carousel_wrapper')
+  });
+
+  let fullyVisible = $('.carousel_wrapper').jcarousel('fullyvisible')
+  console.log(fullyVisible);
+  fullyVisible.addClass('visible');
+  let items = $('.carousel_wrapper').jcarousel('list');
+  console.log(items);
 });

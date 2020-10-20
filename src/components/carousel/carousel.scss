@@ -1,27 +1,28 @@
 @import "./_list/_list";
 @import "./_item/_item";
-/*
-This is the visible area of you carousel.
-Set a width here to define how much items are visible.
-The width can be either fixed in px or flexible in %.
-Position must be relative!
-*/
+@import "./_item_wrapper/_item-wrapper";
+@import "./_pagination/_pagination";
+@import "./_control-wrapper/_control-wrapper";
+@import "./_wrapper/_wrapper";
+@import "./_page-marker/_page-marker";
+
 .carousel {
-  margin: 0;
   position: relative;
-  overflow: hidden;
-}
-
-.carousel-wrapper {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  padding: 30px 0 0 0;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  color: white;
 }
 
-.carousel-control-wrapper {
-  width: 300px;
+.carousel a {
+  color: rgba(95, 91, 91, 0.75);
 }
 
-
-
+.carousel a:hover {
+  color: rgba(255, 255, 255, 0.75);
+}

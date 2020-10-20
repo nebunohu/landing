@@ -1,0 +1,21 @@
+.carousel_control-wrapper {
+  //flex-grow: 1;
+  margin-top: -50px;
+  display: flex;
+  align-items: center;
+  height: 100px;
+  font-size: 50px;
+  z-index: 1031;
+}
+
+.carousel_control-wrapper.next {
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.carousel_control-wrapper.prev {
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
