@@ -32,12 +32,12 @@ $(function() {
     carousel: $('.carousel_wrapper')
   });
 
-  $('.carousel_pagination').jcarouselPagination({
+  /*$('.carousel_pagination').jcarouselPagination({
     item: function(page) {
         return '<a class="carousel_page-marker" href="#' + page + '">' + '</a>';
     },
     carousel: $('.carousel_wrapper')
-  });
+  });*/
 
   let fullyVisible = $('.carousel_wrapper').jcarousel('fullyvisible')
   console.log(fullyVisible);
@@ -45,3 +45,17 @@ $(function() {
   let items = $('.carousel_wrapper').jcarousel('list');
   console.log(items);
 });
+
+(function pagination() {
+  let carouselItems = Array.from(document.querySelectorAll('.carousel_item'));
+  let carouselPagination = document.querySelector('.carousel_pagination');
+  let pageRefs = [];
+  let i = 0;
+
+  for(i= 0; i < carouselItems.length; i++) {
+    pageRefs.push(document.createElement('a'));
+    pageRefs[i].classList.add('carousel_page-marker');
+    pageRefs[i].setAttribute('href','#'+i);
+    carouselPagination.appendChild(pageRefs[i]);
+  }
+})();

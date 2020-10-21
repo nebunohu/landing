@@ -67,5 +67,6 @@ module.exports = {
     ],
     devServer: {
         stats: 'errors-only'
-    }
+    },
+    devtool: 'source-map'
 };
