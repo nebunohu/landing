@@ -1,5 +1,5 @@
 import './style.scss';
-import 'bootstrap/js/src/carousel';
+//import 'bootstrap/js/src/carousel';
 //import 'bootstrap';
 //import './plugins/jquery.jcarousel-core';
 //import '../node_modules/jcarousel/dist/jquery.jcarousel-core';
@@ -49,8 +49,16 @@ $(function() {
 (function pagination() {
   let carouselItems = Array.from(document.querySelectorAll('.carousel_item'));
   let carouselPagination = document.querySelector('.carousel_pagination');
-  let pageRefs = [];
+  let pageRefs = Array.from(document.querySelectorAll('.carousel_page-marker'));
   let i = 0;
+
+  if (pageRefs.length) {
+    for(i = 0; i < pageRefs.length; i++) {
+      carouselPagination.removeChild(document.querySelector('.carousel_page-marker'));
+    }
+  }
+  pageRefs.slice(0, pageRefs.length);
+  
 
   for(i= 0; i < carouselItems.length; i++) {
     pageRefs.push(document.createElement('a'));
@@ -58,4 +66,17 @@ $(function() {
     pageRefs[i].setAttribute('href','#'+i);
     carouselPagination.appendChild(pageRefs[i]);
   }
+
+
+
+  carouselPagination.addEventListener('click', function(event){
+    let currentPageMarker;
+    let href;
+
+    if(event.target.closest('.carousel_page-marker')) {
+      currentPageMarker = event.target.closest('.carousel_page-marker');
+      href = currentPageMarker.getAttribute('href');
+
+    }
+  });
 })();
