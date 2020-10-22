@@ -1,4 +1,4 @@
-.carousel_control-wrapper {
+.carousel__control-wrapper {
   //flex-grow: 1;
   margin-top: -50px;
   display: flex;
@@ -8,13 +8,13 @@
   z-index: 1031;
 }
 
-.carousel_control-wrapper.next {
+.carousel__control-wrapper.next {
   position: absolute;
   right: 0;
   top: 50%;
 }
 
-.carousel_control-wrapper.prev {
+.carousel__control-wrapper.prev {
   position: absolute;
   left: 0;
   top: 50%;

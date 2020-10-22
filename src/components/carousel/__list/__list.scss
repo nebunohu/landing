@@ -3,7 +3,7 @@ This is the container of the carousel items.
 You must ensure that the position is relative or absolute and
 that the width is big enough to contain all items.
 */
-.carousel_list {
+.carousel__list {
   display: flex;
   flex-flow: row nowrap;
   justify-content: left;

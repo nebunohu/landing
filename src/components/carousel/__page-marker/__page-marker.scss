@@ -1,4 +1,6 @@
-.carousel_page-marker {
+@import "./_active";
+
+.carousel__page-marker {
   height: 5px;
   width: 35px;
   background-color: rgba(95, 91, 91, 0.75);
@@ -6,6 +8,6 @@
   cursor: pointer;
 }
 
-.carousel_page-marker:hover {
+.carousel__page-marker:hover {
   background-color: rgba(255, 255, 255, 0.75);
 }

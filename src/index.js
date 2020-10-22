@@ -3,14 +3,17 @@ import './style.scss';
 //import 'bootstrap';
 //import './plugins/jquery.jcarousel-core';
 //import '../node_modules/jcarousel/dist/jquery.jcarousel-core';
-import 'jcarousel';
+import 'jcarousel/dist/jquery.jcarousel-core';
+import 'jcarousel/dist/jquery.jcarousel-pagination';
+import 'jcarousel/dist/jquery.jcarousel-control';
+import "jcarousel/dist/jquery.jcarousel-autoscroll";
 
-$(function() {
-  $('.carousel_wrapper')
+(function($) {
+  $('.carousel__wrapper')
       .jcarousel({
           // Configuration goes here
-          //list: '.carousel_list',
-          //items: '.carousel_item',
+          list: '.carousel__list',
+          items: '.carousel__item',
           animation: 'slow',
           wrap: 'both',
           vertical: false,
@@ -22,14 +25,14 @@ $(function() {
       })
   ;
 
-  $('.carousel_prev').jcarouselControl({
+  $('.carousel__prev').jcarouselControl({
     target: '-=1',
-    carousel: $('.carousel_wrapper')
+    carousel: $('.carousel__wrapper')
   });
 
-  $('.carousel_next').jcarouselControl({
+  $('.carousel__next').jcarouselControl({
     target: '+=1',
-    carousel: $('.carousel_wrapper')
+    carousel: $('.carousel__wrapper')
   });
 
   /*$('.carousel_pagination').jcarouselPagination({
@@ -39,22 +42,22 @@ $(function() {
     carousel: $('.carousel_wrapper')
   });*/
 
-  let fullyVisible = $('.carousel_wrapper').jcarousel('fullyvisible')
+  let fullyVisible = $('.carousel__wrapper').jcarousel('fullyvisible')
   console.log(fullyVisible);
-  fullyVisible.addClass('visible');
-  let items = $('.carousel_wrapper').jcarousel('list');
+  //fullyVisible.addClass('visible');
+  let items = $('.carousel__wrapper').jcarousel('list');
   console.log(items);
-});
+})(jQuery);
 
 (function pagination() {
-  let carouselItems = Array.from(document.querySelectorAll('.carousel_item'));
-  let carouselPagination = document.querySelector('.carousel_pagination');
-  let pageRefs = Array.from(document.querySelectorAll('.carousel_page-marker'));
+  let carouselItems = Array.from(document.querySelectorAll('.carousel__item'));
+  let carouselPagination = document.querySelector('.carousel__pagination');
+  let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
   let i = 0;
 
   if (pageRefs.length) {
     for(i = 0; i < pageRefs.length; i++) {
-      carouselPagination.removeChild(document.querySelector('.carousel_page-marker'));
+      carouselPagination.removeChild(document.querySelector('.carousel__page-marker'));
     }
   }
   pageRefs.slice(0, pageRefs.length);
@@ -62,21 +65,19 @@ $(function() {
 
   for(i= 0; i < carouselItems.length; i++) {
     pageRefs.push(document.createElement('a'));
-    pageRefs[i].classList.add('carousel_page-marker');
+    pageRefs[i].classList.add('carousel__page-marker');
     pageRefs[i].setAttribute('href','#'+i);
     carouselPagination.appendChild(pageRefs[i]);
   }
-
-
 
   carouselPagination.addEventListener('click', function(event){
     let currentPageMarker;
     let href;
 
-    if(event.target.closest('.carousel_page-marker')) {
-      currentPageMarker = event.target.closest('.carousel_page-marker');
+    if(event.target.closest('.carousel__page-marker')) {
+      currentPageMarker = event.target.closest('.carousel__page-marker');
       href = currentPageMarker.getAttribute('href');
-
+      currentPageMarker.classList.add('carousel__page-marker_active');
     }
   });
 })();
