@@ -1,4 +1,4 @@
-import './style.scss';
+//import './style.scss';
 //import 'bootstrap/js/src/carousel';
 //import 'bootstrap';
 //import './plugins/jquery.jcarousel-core';
@@ -35,48 +35,34 @@ import "jcarousel/dist/jquery.jcarousel-autoscroll";
     carousel: $('.carousel__wrapper')
   });
 
-  /*$('.carousel_pagination').jcarouselPagination({
+  $('.carousel__pagination').jcarouselPagination({
     item: function(page) {
-        return '<a class="carousel_page-marker" href="#' + page + '">' + '</a>';
+        return '<a class="carousel__page-marker" href="#' + page + '">' + '</a>';
     },
-    carousel: $('.carousel_wrapper')
-  });*/
+    carousel: $('.carousel__wrapper')
+  });
 
-  let fullyVisible = $('.carousel__wrapper').jcarousel('fullyvisible')
-  console.log(fullyVisible);
-  //fullyVisible.addClass('visible');
-  let items = $('.carousel__wrapper').jcarousel('list');
-  console.log(items);
+  let firstPageRef = document.querySelector('.carousel__page-marker');
+  firstPageRef.classList.add('carousel__page-marker_active');
+
 })(jQuery);
 
 (function pagination() {
-  let carouselItems = Array.from(document.querySelectorAll('.carousel__item'));
   let carouselPagination = document.querySelector('.carousel__pagination');
   let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
   let i = 0;
 
-  if (pageRefs.length) {
-    for(i = 0; i < pageRefs.length; i++) {
-      carouselPagination.removeChild(document.querySelector('.carousel__page-marker'));
-    }
-  }
-  pageRefs.slice(0, pageRefs.length);
-  
-
-  for(i= 0; i < carouselItems.length; i++) {
-    pageRefs.push(document.createElement('a'));
-    pageRefs[i].classList.add('carousel__page-marker');
-    pageRefs[i].setAttribute('href','#'+i);
-    carouselPagination.appendChild(pageRefs[i]);
-  }
-
   carouselPagination.addEventListener('click', function(event){
     let currentPageMarker;
-    let href;
 
     if(event.target.closest('.carousel__page-marker')) {
       currentPageMarker = event.target.closest('.carousel__page-marker');
-      href = currentPageMarker.getAttribute('href');
+      
+      for(i = 0; i < pageRefs.length; i++) {
+        if(pageRefs[i].classList.contains('carousel__page-marker_active')) {
+          pageRefs[i].classList.remove('carousel__page-marker_active');
+        }
+      }
       currentPageMarker.classList.add('carousel__page-marker_active');
     }
   });
