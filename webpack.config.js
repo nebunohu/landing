@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 
 
 module.exports = {
@@ -33,8 +34,19 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: [ 
-                    /*process.env.NODE_ENV !== 'production' ? 'style-loader' :*/ MiniCssExtractPlugin.loader,
+                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
                     'css-loader', 
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer(/*{
+                                    browsers:['ie >= 8', 'last 4 version']
+                                }*/)
+                            ],
+                            sourceMap: true
+                        }
+                    },
                     {
                         loader: 'sass-loader',
                         options: {
