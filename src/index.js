@@ -16,11 +16,12 @@ var pageRefs = [];
   function nextPage(pageRefs) {
     let i = 0;
 
-    /*for(i = 0; i < pageRefs.length; i++) {
-      if(pageRefs[i].classList.contains('carousel__page-marker_active')) {
-        pageRefs[i].classList.remove('carousel__page-marker_active');
+    for(i = 0; i < pageRefs.length; i++) {
+      if(pageRefs[i].active) {
+        pageRefs[i].active = false;
+        
       }
-    }*/
+    }
   }
 
   $('.carousel__wrapper')
@@ -79,7 +80,7 @@ var pageRefs = [];
 
 (function pagination() {
   let carouselPagination = document.querySelector('.carousel__pagination');
-  let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
+  //let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
   let i = 0;
 
   carouselPagination.addEventListener('click', function(event){
@@ -90,10 +91,16 @@ var pageRefs = [];
       
       for(i = 0; i < pageRefs.length; i++) {
         if(pageRefs[i].active) {
-          pageRefs[i].classList.remove('carousel__page-marker_active');
+          pageRefs[i].active = false;
+          pageRefs[i].DOM.classList.remove('carousel__page-marker_active');
         }
       }
       currentPageMarker.classList.add('carousel__page-marker_active');
+      for(i = 0; i < pageRefs.length; i++) {
+        if(pageRefs[i].DOM.classList.contains('carousel__page-marker_active')) {
+          pageRefs[i].active = true;
+        }
+      }
     }
   });
 })();
