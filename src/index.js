@@ -8,7 +8,21 @@ import 'jcarousel/dist/jquery.jcarousel-pagination';
 import 'jcarousel/dist/jquery.jcarousel-control';
 import "jcarousel/dist/jquery.jcarousel-autoscroll";
 
+var pageRefs = [];
+
 (function($) {
+  let carousel = document.querySelector('.carousel__list');
+
+  function nextPage(pageRefs) {
+    let i = 0;
+
+    /*for(i = 0; i < pageRefs.length; i++) {
+      if(pageRefs[i].classList.contains('carousel__page-marker_active')) {
+        pageRefs[i].classList.remove('carousel__page-marker_active');
+      }
+    }*/
+  }
+
   $('.carousel__wrapper')
       .jcarousel({
           // Configuration goes here
@@ -42,8 +56,24 @@ import "jcarousel/dist/jquery.jcarousel-autoscroll";
     carousel: $('.carousel__wrapper')
   });
 
-  let firstPageRef = document.querySelector('.carousel__page-marker');
-  firstPageRef.classList.add('carousel__page-marker_active');
+  let _pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
+  
+  let i = 0;
+
+  for(i = 0; i < _pageRefs.length; i++) {
+    let pageRef = {DOM : undefined,
+                   active : false};
+    pageRef.DOM = _pageRefs[i];
+    if(i === 0) {
+      pageRef.active = true;
+      pageRef.DOM.classList.add('carousel__page-marker_active');
+    } else {
+      pageRef.active = false;
+    }
+    pageRefs.push(pageRef);
+  }
+
+  setInterval(() => nextPage(pageRefs), 6000)
 
 })(jQuery);
 
@@ -59,7 +89,7 @@ import "jcarousel/dist/jquery.jcarousel-autoscroll";
       currentPageMarker = event.target.closest('.carousel__page-marker');
       
       for(i = 0; i < pageRefs.length; i++) {
-        if(pageRefs[i].classList.contains('carousel__page-marker_active')) {
+        if(pageRefs[i].active) {
           pageRefs[i].classList.remove('carousel__page-marker_active');
         }
       }
