@@ -33,8 +33,9 @@ module.exports = {
             },
             {
                 test: /\.s[ac]ss$/i,
+                sideEffects: true,
                 use: [ 
-                    /*process.env.NODE_ENV !== 'production' ? 'style-loader' :*/ MiniCssExtractPlugin.loader,
+                    process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
                     'css-loader', 
                     /*{
                         loader: 'postcss-loader',
@@ -47,6 +48,7 @@ module.exports = {
                             sourceMap: true
                         }
                     },*/
+                    'resolve-url-loader',
                     {
                         loader: 'sass-loader',
                         options: {

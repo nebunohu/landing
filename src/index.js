@@ -1,4 +1,4 @@
-//import './style.scss';
+import './style.scss';
 //import 'bootstrap/js/src/carousel';
 //import 'bootstrap';
 //import './plugins/jquery.jcarousel-core';
@@ -10,21 +10,47 @@ import "jcarousel/dist/jquery.jcarousel-autoscroll";
 
 var pageRefs = [];
 
-(function($) {
-  let carousel = document.querySelector('.carousel__list');
+function highLightMarker() {
+    let i;
+    for(i = 0; i < pageRefs.length; i++) {
+        if (pageRefs[i].active) {
+            pageRefs[i].DOM.classList.add('carousel__page-marker_active');
+        } else {
+            if (pageRefs[i].DOM.classList.contains('carousel__page-marker_active')) {
+                pageRefs[i].DOM.classList.remove('carousel__page-marker_active');
+            }
+        }
+    }
+}
 
+(function($) {
   function nextPage(pageRefs) {
-    let i = 0;
+    let i;
+    let next = 0;
 
     for(i = 0; i < pageRefs.length; i++) {
       if(pageRefs[i].active) {
         pageRefs[i].active = false;
-        
+        if(i < pageRefs.length - 1) {
+            next = i+1;
+        } else {
+            next = 0;
+        }
       }
     }
+    pageRefs[next].active = true;
+    highLightMarker();
   }
 
   $('.carousel__wrapper')
+      .on('jcarousel:scrollend', function(event, carousel, target, animate) {
+          // "this" refers to the root element
+          // "carousel" is the jCarousel instance
+          // "target" is the target argument passed to the `scroll` method
+          // "animate" is the animate argument passed to the `scroll` method
+          //      indicating whether jCarousel was requested to do an animation
+          nextPage(pageRefs);
+      })
       .jcarousel({
           // Configuration goes here
           list: '.carousel__list',
@@ -58,8 +84,7 @@ var pageRefs = [];
   });
 
   let _pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
-  
-  let i = 0;
+  let i;
 
   for(i = 0; i < _pageRefs.length; i++) {
     let pageRef = {DOM : undefined,
@@ -74,8 +99,6 @@ var pageRefs = [];
     pageRefs.push(pageRef);
   }
 
-  setInterval(() => nextPage(pageRefs), 6000)
-
 })(jQuery);
 
 (function pagination() {
@@ -88,7 +111,7 @@ var pageRefs = [];
 
     if(event.target.closest('.carousel__page-marker')) {
       currentPageMarker = event.target.closest('.carousel__page-marker');
-      
+
       for(i = 0; i < pageRefs.length; i++) {
         if(pageRefs[i].active) {
           pageRefs[i].active = false;
