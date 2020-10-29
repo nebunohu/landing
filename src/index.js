@@ -9,6 +9,7 @@ import 'jcarousel/dist/jquery.jcarousel-control';
 import "jcarousel/dist/jquery.jcarousel-autoscroll";
 
 var pageRefs = [];
+var clicked = false;
 
 function highLightMarker() {
     let i;
@@ -23,25 +24,34 @@ function highLightMarker() {
     }
 }
 
-(function($) {
-  function nextPage(pageRefs) {
-    let i;
-    let next = 0;
+function nextPage(nextFlag) {
+  let i;
+  let next = 0;
 
-    for(i = 0; i < pageRefs.length; i++) {
-      if(pageRefs[i].active) {
-        pageRefs[i].active = false;
+  for(i = 0; i < pageRefs.length; i++) {
+    if(pageRefs[i].active) {
+      pageRefs[i].active = false;
+      if(nextFlag) {
         if(i < pageRefs.length - 1) {
-            next = i+1;
+          next = i+1;
         } else {
-            next = 0;
+          next = 0;
+        }
+      } else {
+        if(i >  0) {
+          next = i-1;
+        } else {
+          next = pageRefs.length - 1;
         }
       }
-    }
-    pageRefs[next].active = true;
-    highLightMarker();
-  }
 
+    }
+  }
+  pageRefs[next].active = true;
+  highLightMarker();
+}
+
+(function($) {
   $('.carousel__wrapper')
       .on('jcarousel:scrollend', function(event, carousel, target, animate) {
           // "this" refers to the root element
@@ -49,7 +59,13 @@ function highLightMarker() {
           // "target" is the target argument passed to the `scroll` method
           // "animate" is the animate argument passed to the `scroll` method
           //      indicating whether jCarousel was requested to do an animation
-          nextPage(pageRefs);
+        setTimeout(() => {
+          if(!clicked) {
+            nextPage(true);
+          } else {
+            clicked = false;
+          }
+        }, 100);
       })
       .jcarousel({
           // Configuration goes here
@@ -102,15 +118,16 @@ function highLightMarker() {
 })(jQuery);
 
 (function pagination() {
-  let carouselPagination = document.querySelector('.carousel__pagination');
+  let carousel = document.querySelector('.carousel');
   //let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
   let i = 0;
 
-  carouselPagination.addEventListener('click', function(event){
+  carousel.addEventListener('click', function(event){
     let currentPageMarker;
 
     if(event.target.closest('.carousel__page-marker')) {
       currentPageMarker = event.target.closest('.carousel__page-marker');
+      clicked = true;
 
       for(i = 0; i < pageRefs.length; i++) {
         if(pageRefs[i].active) {
@@ -124,6 +141,14 @@ function highLightMarker() {
           pageRefs[i].active = true;
         }
       }
+    }
+    if(event.target.closest('.carousel__next')) {
+      clicked = true;
+      nextPage(true);
+    }
+    if(event.target.closest('.carousel__prev')) {
+      clicked = true;
+      nextPage(false);
     }
   });
 })();
