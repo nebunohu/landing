@@ -92,15 +92,34 @@ function nextPage(nextFlag) {
     carousel: $('.carousel__wrapper')
   });
 
-  $('.carousel__pagination').jcarouselPagination({
+  /*$('.carousel__pagination').jcarouselPagination({
     item: function(page) {
         return '<a class="carousel__page-marker" href="#' + page + '">' + '</a>';
     },
     carousel: $('.carousel__wrapper')
-  });
+  });*/
 
-  let _pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
+  
+
+})(jQuery);
+
+(function pagination() {
+  let carousel = document.querySelector('.carousel');
+  let carouselItems = Array.from(document.querySelectorAll('.carousel__item'));
+  let carouselPagination = document.querySelector('.carousel__pagination');
+  let _pageRefs = [];
+  //let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
   let i;
+
+  for(i= 0; i < carouselItems.length; i++) {
+    _pageRefs.push(document.createElement('a'));
+    _pageRefs[i].classList.add('carousel__page-marker');
+    //if (i === 0) pageRefs[i].classList.add('carousel__page-marker_active');
+    _pageRefs[i].setAttribute('href','#'+i);
+    carouselPagination.appendChild(_pageRefs[i]);
+  }
+
+  //let _pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
 
   for(i = 0; i < _pageRefs.length; i++) {
     let pageRef = {DOM : undefined,
@@ -114,13 +133,6 @@ function nextPage(nextFlag) {
     }
     pageRefs.push(pageRef);
   }
-
-})(jQuery);
-
-(function pagination() {
-  let carousel = document.querySelector('.carousel');
-  //let pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
-  let i = 0;
 
   carousel.addEventListener('click', function(event){
     let currentPageMarker;
