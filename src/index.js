@@ -1,15 +1,16 @@
 import './style.scss';
-//import 'bootstrap/js/src/carousel';
-//import 'bootstrap';
-//import './plugins/jquery.jcarousel-core';
-//import '../node_modules/jcarousel/dist/jquery.jcarousel-core';
-import 'jcarousel/dist/jquery.jcarousel-core';
-import 'jcarousel/dist/jquery.jcarousel-pagination';
-import 'jcarousel/dist/jquery.jcarousel-control';
-import "jcarousel/dist/jquery.jcarousel-autoscroll";
 
-var pageRefs = [];
-var clicked = false;
+let pageRefs = [];
+let clicked = false;
+let carouselScrollingIntervalID;
+let carouselList = document.querySelector('.carousel__list');
+
+function startCarouselScrolling() {
+  carouselScrollingIntervalID = setInterval(() => {
+    nextPage(true);
+    moveCarouselFrame();
+  }, 6000);
+}
 
 function highLightMarker() {
     let i;
@@ -51,57 +52,20 @@ function nextPage(nextFlag) {
   highLightMarker();
 }
 
-(function($) {
-  $('.carousel__wrapper')
-      .on('jcarousel:scrollend', function(event, carousel, target, animate) {
-          // "this" refers to the root element
-          // "carousel" is the jCarousel instance
-          // "target" is the target argument passed to the `scroll` method
-          // "animate" is the animate argument passed to the `scroll` method
-          //      indicating whether jCarousel was requested to do an animation
-        setTimeout(() => {
-          if(!clicked) {
-            nextPage(true);
-          } else {
-            clicked = false;
-          }
-        }, 100);
-      })
-      .jcarousel({
-          // Configuration goes here
-          list: '.carousel__list',
-          items: '.carousel__item',
-          animation: 'slow',
-          wrap: 'both',
-          vertical: false,
-      })
-      .jcarouselAutoscroll({
-          interval: 6000,
-          target: '+=1',
-          autostart: true
-      })
-  ;
+function moveCarouselFrame() {
+  //let carouselList = document.querySelector('.carousel__list');
+  let carouselWidth = getComputedStyle(document.querySelector('.carousel__wrapper')).width;
+  let currentIndex;
+  let carouselWidthInt;
 
-  $('.carousel__prev').jcarouselControl({
-    target: '-=1',
-    carousel: $('.carousel__wrapper')
-  });
-
-  $('.carousel__next').jcarouselControl({
-    target: '+=1',
-    carousel: $('.carousel__wrapper')
-  });
-
-  /*$('.carousel__pagination').jcarouselPagination({
-    item: function(page) {
-        return '<a class="carousel__page-marker" href="#' + page + '">' + '</a>';
-    },
-    carousel: $('.carousel__wrapper')
-  });*/
-
-  
-
-})(jQuery);
+  for (let i = 0; i < pageRefs.length; i++) {
+    if (pageRefs[i].active) {
+      currentIndex = i;
+    }
+  }
+  carouselWidthInt = parseInt(carouselWidth);
+  carouselList.style.left = "-" + (carouselWidthInt * currentIndex) + "px";
+}
 
 (function pagination() {
   let carousel = document.querySelector('.carousel');
@@ -114,12 +78,9 @@ function nextPage(nextFlag) {
   for(i= 0; i < carouselItems.length; i++) {
     _pageRefs.push(document.createElement('a'));
     _pageRefs[i].classList.add('carousel__page-marker');
-    //if (i === 0) pageRefs[i].classList.add('carousel__page-marker_active');
     _pageRefs[i].setAttribute('href','#'+i);
     carouselPagination.appendChild(_pageRefs[i]);
   }
-
-  //let _pageRefs = Array.from(document.querySelectorAll('.carousel__page-marker'));
 
   for(i = 0; i < _pageRefs.length; i++) {
     let pageRef = {DOM : undefined,
@@ -141,6 +102,7 @@ function nextPage(nextFlag) {
       currentPageMarker = event.target.closest('.carousel__page-marker');
       clicked = true;
 
+      clearInterval(carouselScrollingIntervalID);
       for(i = 0; i < pageRefs.length; i++) {
         if(pageRefs[i].active) {
           pageRefs[i].active = false;
@@ -153,14 +115,26 @@ function nextPage(nextFlag) {
           pageRefs[i].active = true;
         }
       }
+      moveCarouselFrame();
+      startCarouselScrolling();
     }
     if(event.target.closest('.carousel__next')) {
+      clearInterval(carouselScrollingIntervalID);
       clicked = true;
       nextPage(true);
+      moveCarouselFrame();
+      startCarouselScrolling();
     }
     if(event.target.closest('.carousel__prev')) {
+      clearInterval(carouselScrollingIntervalID);
       clicked = true;
       nextPage(false);
+      moveCarouselFrame();
+      startCarouselScrolling();
     }
   });
+})();
+
+(function () {
+  startCarouselScrolling();
 })();
